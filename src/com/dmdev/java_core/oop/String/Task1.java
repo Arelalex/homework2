@@ -17,8 +17,7 @@ public class Task1 {
     }
 
     private static String removeSpace(String string) {
-        String stringWithoutSpaces = string.replace(" ", "");
-        return stringWithoutSpaces;
+        return string.replace(" ", "");
     }
 
     private static String removeDuplicate(String string) {

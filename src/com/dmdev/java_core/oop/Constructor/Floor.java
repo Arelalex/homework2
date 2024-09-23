@@ -1,8 +1,8 @@
 package com.dmdev.java_core.oop.Constructor;
 
 public class Floor {
-    private int numberOfFloor;  // номер этажа
-    private Apartment[] apartment;    // массив квартир
+    private final Integer numberOfFloor;  // номер этажа
+    private final Apartment[] apartment;    // массив квартир
 
     public Floor(int numberOfFloor, Apartment[] apartment) {
         this.numberOfFloor = numberOfFloor;

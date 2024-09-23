@@ -2,8 +2,8 @@ package com.dmdev.java_core.oop.Constructor;
 
 public class Build {
 
-    private int numberOfBuild;   // номер дома
-    private Floor[] floor;   // массив этажей
+    private final Integer numberOfBuild;   // номер дома
+    private final Floor[] floor;   // массив этажей
 
     public Build(int numberOfBuild, Floor[] floors) {
         this.numberOfBuild = numberOfBuild;
@@ -19,6 +19,7 @@ public class Build {
     }
 
     public void print() {
-        System.out.println("Номер дома: " + getNumberOfBuild() + ", Этаж: " + getFloor().length);
+        //System.out.println("Номер дома: " + getNumberOfBuild() + ", Этаж: " + getFloor().length);
+        System.out.println("Номер дома: " + getNumberOfBuild() + ", Этаж: " + getFloor());
     }
 }

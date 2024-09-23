@@ -1,7 +1,7 @@
 package com.dmdev.java_core.oop.Constructor;
 
 public class Room {
-    private boolean throughRoom;
+    private final Boolean throughRoom;
 
     public Room(boolean throughRoom) {
         this.throughRoom = throughRoom;

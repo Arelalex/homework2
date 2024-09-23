@@ -45,8 +45,8 @@ public class Task2 {
 
     private static int sum(int[] intArray) {
         int result = 0;
-        for (int i = 0; i < intArray.length; i++) {
-            result += intArray[i];
+        for (int j : intArray) {
+            result += j;
         }
         return result;
     }
