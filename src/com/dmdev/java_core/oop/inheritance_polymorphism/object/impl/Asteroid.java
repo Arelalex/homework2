@@ -1,6 +1,10 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Asteroid extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.TypesOfAsteroids;
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.Rotating;
+
+public class Asteroid extends AbstractCosmicObject implements Rotating {
     private TypesOfAsteroids consist;
     private Double rotationSpeed;
 

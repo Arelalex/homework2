@@ -1,6 +1,10 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Planet extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.ConsistOfPlanet;
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.TypeOfPlanet;
+
+public class Planet extends AbstractCosmicObject implements Rotating {
     private Integer numberOfSatellite;
     private ConsistOfPlanet additionalConsist;
     private Boolean hasLife;

@@ -1,4 +1,7 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.util;
+
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.impl.Star;
 
 public final class SpaceUtils {
     private final static Double GRAVITATIONAL_CONSTANT = 6.674 * Math.pow(10, -11);
@@ -8,7 +11,7 @@ public final class SpaceUtils {
     private SpaceUtils() {
     }
 
-    public static Double calculateForceOfGravity(CosmicObject objectOne, CosmicObject objectTwo) {
+    public static Double calculateForceOfGravity(AbstractCosmicObject objectOne, AbstractCosmicObject objectTwo) {
         double diameterOne = objectOne.calculatingDiameter();
         double radiusOne = diameterOne / 2;
         double forceOfGravity = GRAVITATIONAL_CONSTANT * ((objectOne.getWeight() * MULTIPLIER_FOR_MASS) * objectTwo.getWeight())
@@ -17,7 +20,7 @@ public final class SpaceUtils {
         return forceOfGravity;
     }
 
-    public static Boolean isStar(CosmicObject object) {
+    public static Boolean isStar(AbstractCosmicObject object) {
         if (object instanceof Star) {
             System.out.println(object.getName() + " является звездой");
             return true;

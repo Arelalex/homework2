@@ -1,6 +1,8 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Comet extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+
+public class Comet extends AbstractCosmicObject implements Rotating {
 
     private Double coreSize;
     private Boolean cometTail;

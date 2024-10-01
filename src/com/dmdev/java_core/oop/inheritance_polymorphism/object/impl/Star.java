@@ -1,6 +1,9 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Star extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.TypeOfStar;
+
+public class Star extends AbstractCosmicObject implements Rotating {
     private Character spectralClass;
     private Integer ageStar;
     private TypeOfStar typeOfStar;

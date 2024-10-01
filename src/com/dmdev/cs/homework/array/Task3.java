@@ -28,6 +28,7 @@ public class Task3 {
         int[][] newTwoDimensionalArrayWithoutPositiveNumbers = createArray(arrayWithoutPositiveNumbers, calculateLengthOfArray(arrayWithoutPositiveNumbers));
         printArray(newTwoDimensionalArrayWithoutPositiveNumbers);
         System.out.println(newTwoDimensionalArrayWithoutPositiveNumbers[1]);
+
     }
 
     private static void printArray(int[][] array) {

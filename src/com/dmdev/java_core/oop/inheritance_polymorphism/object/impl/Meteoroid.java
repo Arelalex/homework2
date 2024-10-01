@@ -1,6 +1,9 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Meteoroid extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.ConsistOfMeteoroid;
+
+public class Meteoroid extends AbstractCosmicObject implements Rotating {
 
     private ConsistOfMeteoroid consist;
     private Boolean isMeteorites;

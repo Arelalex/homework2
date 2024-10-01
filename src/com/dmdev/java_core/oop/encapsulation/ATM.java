@@ -1,9 +1,9 @@
 package com.dmdev.java_core.oop.encapsulation;
 
 public class ATM {
-    private final static Integer TEN = 10;
-    private final static Integer TWENTY = 20;
-    private final static Integer FIFTY = 50;
+    private static final Integer TEN = 10;
+    private static final Integer TWENTY = 20;
+    private static final Integer FIFTY = 50;
     private Integer numberOf10;
     private Integer numberOf20;
     private Integer numberOf50;

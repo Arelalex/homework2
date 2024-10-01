@@ -1,6 +1,8 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class Satellite extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+
+public class Satellite extends AbstractCosmicObject implements Rotating {
 
     private Double orbitalPeriod;
     private Double timeOfCompleteRevolution;

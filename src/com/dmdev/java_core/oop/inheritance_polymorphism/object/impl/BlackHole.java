@@ -1,6 +1,9 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object.impl;
 
-public class BlackHole extends CosmicObject implements Rotating {
+import com.dmdev.java_core.oop.inheritance_polymorphism.object.AbstractCosmicObject;
+import com.dmdev.java_core.oop.inheritance_polymorphism.enums.TypeOfBlackHoles;
+
+public class BlackHole extends AbstractCosmicObject implements Rotating {
     private TypeOfBlackHoles type;
     private Boolean spin;
 

@@ -1,6 +1,6 @@
-package com.dmdev.java_core.oop.inheritance_polymorphism;
+package com.dmdev.java_core.oop.inheritance_polymorphism.object;
 
-public abstract class CosmicObject implements Comparable, Rotating, CalculatingDiameter {
+public abstract class AbstractCosmicObject implements ComparableWeight, CalculatingDiameter {
 
     private String nameOfCosmicObject;
     private String name;
@@ -8,7 +8,7 @@ public abstract class CosmicObject implements Comparable, Rotating, CalculatingD
     private Integer size;
     private Double distanceFromSun;
 
-    public CosmicObject(String nameOfCosmicObject, String name, Double weight, Integer size, Double distanceFromSun) {
+    public AbstractCosmicObject(String nameOfCosmicObject, String name, Double weight, Integer size, Double distanceFromSun) {
         this.nameOfCosmicObject = nameOfCosmicObject;
         this.name = name;
         this.weight = weight;
@@ -17,7 +17,7 @@ public abstract class CosmicObject implements Comparable, Rotating, CalculatingD
     }
 
     @Override
-    public void compareWeight(CosmicObject object) {
+    public void compareWeight(AbstractCosmicObject object) {
         if (this.weight > object.weight) {
             System.out.println("Масса " + this.name + " больше, чем " + object.name);
         } else if (object.weight > this.weight) {
