@@ -1,5 +1,8 @@
 package com.dmdev.java_core.oop.collection.hw3;
 
+import com.dmdev.java_core.oop.collection.hw3.cinema.Cinema;
+import com.dmdev.java_core.oop.collection.hw3.cinema.Film;
+
 import java.util.LinkedHashSet;
 import java.util.Map;
 

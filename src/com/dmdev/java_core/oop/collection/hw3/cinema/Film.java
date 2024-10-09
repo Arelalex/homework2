@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.collection.hw3;
+package com.dmdev.java_core.oop.collection.hw3.cinema;
 
 import com.dmdev.java_core.oop.collection.hw3.genre.Genre;
 
@@ -50,6 +50,26 @@ public class Film implements Comparable<Film>{
 
     public Double getRating() {
         return rating;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     @Override

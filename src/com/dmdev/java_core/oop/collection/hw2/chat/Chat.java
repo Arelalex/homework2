@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.collection.hw2;
+package com.dmdev.java_core.oop.collection.hw2.chat;
 
 import java.util.List;
 
@@ -30,5 +30,13 @@ public class Chat implements Comparable<Chat> {
                 "name='" + name + '\'' +
                 ", users=" + users +
                 '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

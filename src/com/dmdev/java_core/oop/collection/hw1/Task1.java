@@ -1,5 +1,8 @@
 package com.dmdev.java_core.oop.collection.hw1;
 
+import com.dmdev.java_core.oop.collection.hw1.chat.Chat;
+import com.dmdev.java_core.oop.collection.hw1.util.UtilChatAction;
+
 import java.util.*;
 
 /**
@@ -27,22 +30,13 @@ public class Task1 {
         );
         List<Chat> chatList = new ArrayList<>(sourceList);
 
-        deleteChat(chatList);
+        UtilChatAction.deleteChat(chatList);
 
         chatList.sort(new NumberOfUsersComparator());
         System.out.println(chatList);
 
         Collections.sort(chatList);
         System.out.println(chatList);
-    }
-
-    public static void deleteChat(List<Chat> chatList) {
-        for (Iterator<Chat> iterator = chatList.iterator(); iterator.hasNext(); ) {
-            Chat next = iterator.next();
-            if (next.getNumberOfUsers() < 1000) {
-                iterator.remove();
-            }
-        }
     }
 
     public static class NumberOfUsersComparator implements Comparator<Chat> {

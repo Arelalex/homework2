@@ -1,9 +1,14 @@
 package com.dmdev.java_core.oop.collection.hw2;
 
+import com.dmdev.java_core.oop.collection.hw2.chat.Chat;
+import com.dmdev.java_core.oop.collection.hw2.chat.User;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+
+import static com.dmdev.java_core.oop.collection.hw2.util.UtilActionChat.calculateAverageAge;
+import static com.dmdev.java_core.oop.collection.hw2.util.UtilActionChat.convertToSingleList;
 
 /**
  * Дан список чатов с предыдущего задания, только вместо поля “количество пользователей” будет список объектов
@@ -43,29 +48,6 @@ public class Task2 {
 
         System.out.println(convertToSingleList(chatList));
         System.out.println(calculateAverageAge(convertToSingleList(chatList)));
-    }
-
-    public static List<User> convertToSingleList(List<Chat> chatList) {
-        List<User> newListWithUsers = new ArrayList<>();
-        for (Iterator<Chat> iteratorChat = chatList.iterator(); iteratorChat.hasNext(); ) {
-            Chat nextChat = iteratorChat.next();
-            for (Iterator<User> iteratorUser = nextChat.getUsers().iterator(); iteratorUser.hasNext(); ) {
-                User nextUser = iteratorUser.next();
-                if (nextUser.getAge() > 18) {
-                    newListWithUsers.add(nextUser);
-                }
-            }
-        }
-        return newListWithUsers;
-    }
-
-    public static int calculateAverageAge(List<User> newListWithUsers) {
-        int counter = 0;
-        for (Iterator<User> iterator = newListWithUsers.iterator(); iterator.hasNext(); ) {
-            User next = iterator.next();
-            counter += next.getAge();
-        }
-        return counter / newListWithUsers.size();
     }
 }
 

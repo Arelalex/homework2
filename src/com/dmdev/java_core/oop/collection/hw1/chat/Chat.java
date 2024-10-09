@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.collection.hw1;
+package com.dmdev.java_core.oop.collection.hw1.chat;
 
 public class Chat implements Comparable<Chat> {
     private String name;
@@ -28,5 +28,13 @@ public class Chat implements Comparable<Chat> {
     @Override
     public int compareTo(Chat o) {
         return name.compareTo(o.name);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumberOfUsers(Integer numberOfUsers) {
+        this.numberOfUsers = numberOfUsers;
     }
 }

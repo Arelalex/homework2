@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.collection.hw3;
+package com.dmdev.java_core.oop.collection.hw3.cinema;
 
 import com.dmdev.java_core.oop.collection.hw3.genre.Genre;
 
@@ -9,7 +9,7 @@ public class Cinema {
     private final Map<Integer, LinkedHashSet<Film>> map;
 
     public Cinema() {
-        map = new TreeMap<>();
+        map = new HashMap<>();
     }
 
     public void addFilm(Film film) {

@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.collection.hw2;
+package com.dmdev.java_core.oop.collection.hw2.chat;
 
 public class User implements Comparable<User>{
     private Integer id;
@@ -16,6 +16,15 @@ public class User implements Comparable<User>{
         return age.compareTo(o.age);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -28,12 +37,15 @@ public class User implements Comparable<User>{
         return age;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", age=" + age +
-                '}';
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
