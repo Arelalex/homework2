@@ -1,4 +1,4 @@
-package com.dmdev.java_core.oop.io_stream.Auxiliary;
+package com.dmdev.java_core.oop.io_stream.auxiliary;
 
 public class Items {
     private String id;

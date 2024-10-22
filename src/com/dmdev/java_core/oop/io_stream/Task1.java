@@ -1,6 +1,6 @@
 package com.dmdev.java_core.oop.io_stream;
 
-import com.dmdev.java_core.oop.io_stream.Auxiliary.Items;
+import com.dmdev.java_core.oop.io_stream.auxiliary.Items;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,19 +34,19 @@ public class Task1 {
         Path path1 = Path.of("resources", "items-price.csv");
         Path path2 = Path.of("resources", "items-name.csv");
 
-        Map<String, Items> itemsMapFromFile1 = new HashMap<>();
-        Map<String, Items> itemsMapFromFile2 = new HashMap<>();
+        Map<String, Items> itemsMapFromFileWithPrice = new HashMap<>();
+        Map<String, Items> itemsMapFromFileWithName = new HashMap<>();
 
         File result = Path.of("resources", "result.csv").toFile();
         File errors = Path.of("resources", "errors.csv").toFile();
 
         createDirectory();
         createFiles(path1, path2);
-        getMapFromFile2(path2,itemsMapFromFile2);
-        getMapFromFile1(path1,itemsMapFromFile1);
+        getMapFromFileWithName(path2,itemsMapFromFileWithName);
+        getMapFromFileWithPrice(path1,itemsMapFromFileWithPrice);
 
-        writeResultInFile(getMapWithCorrectResult(getResultMap(itemsMapFromFile1, itemsMapFromFile2)),result);
-        writeResultInErrorsFile(getMapWithIncorrectResult(getResultMap(itemsMapFromFile1, itemsMapFromFile2)),errors);
+        writeResultInFile(getMapWithCorrectResult(getResultMap(itemsMapFromFileWithPrice, itemsMapFromFileWithName)),result);
+        writeResultInErrorsFile(getMapWithIncorrectResult(getResultMap(itemsMapFromFileWithPrice, itemsMapFromFileWithName)),errors);
 
     }
 }
