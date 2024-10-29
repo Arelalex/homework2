@@ -1,4 +1,6 @@
-package com.dmdev.thread_new;
+package com.dmdev.thread_new.mages;
+
+import com.dmdev.thread_new.enams.CrystalType;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,22 +48,6 @@ public class Planet implements Runnable {
         }
     }
 
-    public static AtomicInteger getRedCrystals() {
-        return redCrystals;
-    }
-
-    public static void setRedCrystals(AtomicInteger redCrystals) {
-        Planet.redCrystals = redCrystals;
-    }
-
-    public static AtomicInteger getWhiteCrystals() {
-        return whiteCrystals;
-    }
-
-    public static void setWhiteCrystals(AtomicInteger whiteCrystals) {
-        Planet.whiteCrystals = whiteCrystals;
-    }
-
     @Override
     public void run() {
         growCrystals();
@@ -104,4 +90,21 @@ public class Planet implements Runnable {
             lock.unlock();
         }
     }
+
+    public static AtomicInteger getRedCrystals() {
+        return redCrystals;
+    }
+
+    public static void setRedCrystals(AtomicInteger redCrystals) {
+        Planet.redCrystals = redCrystals;
+    }
+
+    public static AtomicInteger getWhiteCrystals() {
+        return whiteCrystals;
+    }
+
+    public static void setWhiteCrystals(AtomicInteger whiteCrystals) {
+        Planet.whiteCrystals = whiteCrystals;
+    }
+
 }

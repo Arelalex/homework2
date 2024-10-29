@@ -1,6 +1,15 @@
 package com.dmdev.thread_new;
 
-import java.util.concurrent.*;
+import com.dmdev.thread_new.enams.CrystalType;
+import com.dmdev.thread_new.mages.Planet;
+import com.dmdev.thread_new.mages.Race;
+import com.dmdev.thread_new.mages.Rocket;
+
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -60,7 +69,7 @@ public class Runner {
 
     private static void collectAndDisplayCrystals(Rocket rocket, Race mages) {
         try {
-            ConcurrentHashMap<CrystalType, Integer> crystals = rocket.loadCrystals();
+            Map<CrystalType, Integer> crystals = rocket.loadCrystals();
             mages.addCrystal(crystals);
             System.out.println(mages.getName() + " - общее количество красных кристаллов: " + mages.getTotalRedCrystals() +
                     " и общее количество белых кристаллов: " + mages.getTotalWhiteCrystals());

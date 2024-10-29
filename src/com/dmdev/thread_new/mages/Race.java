@@ -1,6 +1,8 @@
-package com.dmdev.thread_new;
+package com.dmdev.thread_new.mages;
 
-import java.util.concurrent.ConcurrentHashMap;
+import com.dmdev.thread_new.enams.CrystalType;
+
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -14,7 +16,7 @@ public class Race {
         this.name = name;
     }
 
-    public void addCrystal(ConcurrentHashMap<CrystalType, Integer> crystalFromRocket) {
+    public void addCrystal(Map<CrystalType, Integer> crystalFromRocket) {
         lock.lock();
         try {
             totalRedCrystals += crystalFromRocket.get(CrystalType.RED);

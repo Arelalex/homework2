@@ -1,5 +1,8 @@
-package com.dmdev.thread_new;
+package com.dmdev.thread_new.mages;
 
+import com.dmdev.thread_new.enams.CrystalType;
+
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,7 +21,7 @@ public class Rocket implements Runnable {
     @Override
     public void run() {
         while (race.getTotalWhiteCrystals() < 50 || race.getTotalRedCrystals() < 50) {
-            ConcurrentHashMap<CrystalType, Integer> collectedCrystals = null;
+            Map<CrystalType, Integer> collectedCrystals;
             try {
                 collectedCrystals = loadCrystals();
             } catch (InterruptedException e) {
@@ -40,8 +43,8 @@ public class Rocket implements Runnable {
         System.out.println("Сбор кристаллов завершен.");
     }
 
-    public ConcurrentHashMap<CrystalType, Integer> loadCrystals() throws InterruptedException {
-        ConcurrentHashMap<CrystalType, Integer> crystalFromRocket = new ConcurrentHashMap<>();
+    public Map<CrystalType, Integer> loadCrystals() throws InterruptedException {
+        Map<CrystalType, Integer> crystalFromRocket = new ConcurrentHashMap<>();
         crystalFromRocket.put(CrystalType.RED, 0);
         crystalFromRocket.put(CrystalType.WHITE, 0);
 
