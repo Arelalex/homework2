@@ -150,7 +150,6 @@ public class ComplaintProcessing implements Runnable {
 
     private String formatPhoneNumber(String phone) {
         String digits = phone.replaceAll("\\D", "");
-
         if (digits.length() == 9) {
             Matcher matcher = PATTERN_9_DIGITS.matcher(digits);
             if (matcher.matches()) {

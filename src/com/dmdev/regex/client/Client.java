@@ -59,7 +59,6 @@ public class Client implements Runnable {
 
     public List<String> doRandomClient() {
         List<String> entries = new ArrayList<>();
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         try {
             long lineCountInComplaintsFile = Files.lines(CUSTOMER_COMPLAINTS).count();
