@@ -21,14 +21,20 @@ import java.util.stream.Collectors;
 public class ComplaintProcessing implements Runnable {
 
     private static final Random RANDOM = new Random();
-    private static final Path customerComplaints = Path.of("resources", "complaints.csv");
-    private static final Path complaintsProcessed = Path.of("resources", "processed.csv");
-    private static final Path positionFilePath = Path.of("resources", "lastPosition.dat");
+    private static final Path CUSTOMER_COMPLAINTS = Path.of("resources", "complaints.csv");
+    private static final Path COMPLAINTS_PROCESSED = Path.of("resources", "processed.csv");
+    private static final Path POSITION_FILE_PATH = Path.of("resources", "lastPosition.dat");
+    private static final String TIME_PATTERN = "yyyy-MM-dd";
+    private static int START_SECONDS = 3; //звонок с клиентом длится от 3 до 5 секунд + минуты
+    private static int START_MINUTES = 1; //звонок с клиентом длится от 1 до 3 минут
+    private static Pattern PATTERN_9_DIGITS = Pattern.compile("(\\d{2})(\\d{3})(\\d{2})(\\d{2})");
+    private static Pattern PATTERN_12_DIGITS = Pattern.compile("(375)(\\d{2})(\\d{3})(\\d{2})(\\d{2})");
     private final Path logFile;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private final int period = 15;
+    private final int PERIOD = 15;
     private final int randomCountDispatcher = ThreadLocalRandom.current().nextInt(2, 4);
     private final ExecutorService dispatcherPool = Executors.newFixedThreadPool(randomCountDispatcher); // Ограничиваем количество диспетчеров
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
     private long lastReadPosition = 0;
 
     public ComplaintProcessing(Path logFile) {
@@ -46,12 +52,12 @@ public class ComplaintProcessing implements Runnable {
             } catch (IOException e) {
                 System.err.println("Ошибка при чтении файла: " + e.getMessage());
             }
-        }, 0, period, TimeUnit.SECONDS);
+        }, 0, PERIOD, TimeUnit.SECONDS);
     }
 
     public void saveLastReadPosition() {
         try {
-            Files.writeString(positionFilePath, String.valueOf(lastReadPosition), StandardOpenOption.CREATE,
+            Files.writeString(POSITION_FILE_PATH, String.valueOf(lastReadPosition), StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             System.out.println("Ошибка при сохранении позиции чтения: " + e.getMessage());
@@ -59,9 +65,9 @@ public class ComplaintProcessing implements Runnable {
     }
 
     public void loadLastReadPosition() {
-        if (Files.exists(positionFilePath)) {
+        if (Files.exists(POSITION_FILE_PATH)) {
             try {
-                String positionStr = Files.readString(positionFilePath);
+                String positionStr = Files.readString(POSITION_FILE_PATH);
                 lastReadPosition = Long.parseLong(positionStr);
             } catch (IOException | NumberFormatException e) {
                 System.out.println("Ошибка при загрузке позиции чтения: " + e.getMessage());
@@ -73,7 +79,7 @@ public class ComplaintProcessing implements Runnable {
     public List<String> readNewEntries() throws IOException {
         loadLastReadPosition();
         List<String> newEntries = new ArrayList<>();
-        try (SeekableByteChannel reader = Files.newByteChannel(customerComplaints, StandardOpenOption.READ)) {
+        try (SeekableByteChannel reader = Files.newByteChannel(CUSTOMER_COMPLAINTS, StandardOpenOption.READ)) {
             reader.position(lastReadPosition);
 
             ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -113,18 +119,19 @@ public class ComplaintProcessing implements Runnable {
         }
         System.out.println("Заявка обработана " + entry);
 
-        String newEntry = entry;
-        List<LogFile> log = Arrays.stream(newEntry.split("\n"))
+        //String newEntry = entry;
+        List<LogFile> log = Arrays.stream(entry.split("\n"))
                 .map(line -> {
                     String[] values = line.split(",");
                     LogFile logFile = new LogFile();
                     logFile.setNumber(values[0]);
 
-                    int durationSeconds = 3 + RANDOM.nextInt(3);
-                    int durationMinutes = 1 + RANDOM.nextInt(2);
+
+                    int durationSeconds = START_SECONDS + RANDOM.nextInt(3);
+                    int durationMinutes = START_MINUTES + RANDOM.nextInt(2);
 
                     LocalDateTime currentDateTime = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
                     String formattedDateTime = currentDateTime.format(formatter);
 
                     String duration = String.format("%02d:%02d", durationMinutes, durationSeconds);
@@ -145,14 +152,12 @@ public class ComplaintProcessing implements Runnable {
         String digits = phone.replaceAll("\\D", "");
 
         if (digits.length() == 9) {
-            Pattern pattern = Pattern.compile("(\\d{2})(\\d{3})(\\d{2})(\\d{2})");
-            Matcher matcher = pattern.matcher(digits);
+            Matcher matcher = PATTERN_9_DIGITS.matcher(digits);
             if (matcher.matches()) {
                 return "+375 (" + matcher.group(1) + ") " + matcher.group(2) + "-" + matcher.group(3) + "-" + matcher.group(4);
             }
         } else if (digits.length() == 12 && digits.startsWith("375")) {
-            Pattern pattern = Pattern.compile("(375)(\\d{2})(\\d{3})(\\d{2})(\\d{2})");
-            Matcher matcher = pattern.matcher(digits);
+            Matcher matcher = PATTERN_12_DIGITS.matcher(digits);
             if (matcher.matches()) {
                 return "+" + matcher.group(1) + " (" + matcher.group(2) + ") " + matcher.group(3) + "-" + matcher.group(4) + "-" + matcher.group(5);
             }
@@ -163,7 +168,7 @@ public class ComplaintProcessing implements Runnable {
 
     public void writeInFile(List<LogFile> log) {
         try {
-            Files.write(complaintsProcessed, log.stream()
+            Files.write(COMPLAINTS_PROCESSED, log.stream()
                             .map(LogFile::writeToLogFile)
                             .collect(Collectors.toList()),
                     StandardOpenOption.CREATE, StandardOpenOption.APPEND);

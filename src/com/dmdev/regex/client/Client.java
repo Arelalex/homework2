@@ -16,9 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Client implements Runnable {
     private static final Random RANDOM = new Random();
-    private static long number = 0;
-    private static final int period = 10;
+    private static final int PERIOD = 10;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final String TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static long number = 0;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    Path CUSTOMER_COMPLAINTS = Path.of("resources", "complaints.csv");
 
     List<String> firstNameLastName = new ArrayList<>(List.of(
             "Светикова Света",
@@ -51,43 +54,40 @@ public class Client implements Runnable {
             } catch (Exception e) {
                 System.err.println("Ошибка при записи в файл: " + e.getMessage());
             }
-        }, 0, period, TimeUnit.SECONDS);
+        }, 0, PERIOD, TimeUnit.SECONDS);
     }
 
     public List<String> doRandomClient() {
         List<String> entries = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        Path customerComplaints = Path.of("resources", "complaints.csv");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         try {
-            long lineCountInComplaintsFile = Files.lines(customerComplaints).count();
+            long lineCountInComplaintsFile = Files.lines(CUSTOMER_COMPLAINTS).count();
             System.out.println("Количество строк в файле" + lineCountInComplaintsFile);
 
             if (lineCountInComplaintsFile == 0) {
                 number++;
-                String numberOfClient = String.valueOf(number);
-                String date = LocalDateTime.now().plusDays(RANDOM.nextInt(30)).format(formatter);
-                String user = firstNameLastName.get(RANDOM.nextInt(firstNameLastName.size()));
-                String phone = numbersOfPhone.get(RANDOM.nextInt(numbersOfPhone.size()));
-                String complaint = complaints.get(RANDOM.nextInt(complaints.size()));
-                String entry = String.join(", ", numberOfClient, date, user, phone, complaint);
-                entries.add(entry);
-                System.out.println("Появилась новая жалоба, номер " + numberOfClient);
-
+                buildEntry(formatter, entries);
             } else {
                 number = lineCountInComplaintsFile + 1;
-                String numberOfClient = String.valueOf(number);
-                String date = LocalDateTime.now().plusDays(RANDOM.nextInt(30)).format(formatter);
-                String user = firstNameLastName.get(RANDOM.nextInt(firstNameLastName.size()));
-                String phone = numbersOfPhone.get(RANDOM.nextInt(numbersOfPhone.size()));
-                String complaint = complaints.get(RANDOM.nextInt(complaints.size()));
-                String entry = String.join(", ", numberOfClient, date, user, phone, complaint);
-                entries.add(entry);
-                System.out.println("Появилась новая жалоба, номер " + numberOfClient);
+                buildEntry(formatter, entries);
             }
             return entries;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String buildEntry(DateTimeFormatter formatter, List<String> entries) {
+        String numberOfClient = String.valueOf(number);
+        String date = LocalDateTime.now().plusDays(RANDOM.nextInt(30)).format(formatter);
+        String user = firstNameLastName.get(RANDOM.nextInt(firstNameLastName.size()));
+        String phone = numbersOfPhone.get(RANDOM.nextInt(numbersOfPhone.size()));
+        String complaint = complaints.get(RANDOM.nextInt(complaints.size()));
+        String entry = String.join(", ", numberOfClient, date, user, phone, complaint);
+        entries.add(entry);
+        System.out.println("Появилась новая жалоба, номер " + numberOfClient);
+        return numberOfClient;
     }
 
     public void writeInFileComplaints() {
