@@ -2,13 +2,14 @@
 ПОЛЬЗОВАТЕЛЬ может быть автором многих НОВОСТЕЙ, либо вообще не быть автором
 ПОЛЬЗОВАТЕЛЬ может оставлять много КОММЕНТАРИЕВ, либо вообще не оставлять
 ПОЛЬЗОВАТЕЛь может иметь только одну РОЛЬ (модератор, user, guest)
-ПОЛЬЗОВАТЕЛЬ может иметь несколько ПРАВ доступа (чтение, создание, редактирование, удаление, может быть комментарирование) для НОВОСТЕЙ и КОММЕНТАРИЕВ
+РОЛЬ может иметь несколько ПРАВ доступа (чтение, создание, редактирование, удаление, может быть комментарирование) для НОВОСТЕЙ и КОММЕНТАРИЕВ
 НОВОСТЬ может иметь только одноо автора - ПОЛЬЗОВАТЕЛЯ
 НОВОСТЬ может иметь много КОММЕНТАРИЕВ
 НОВОСТЬ может иметь только один статус в одно время
 КОММЕНТАРИЙ может принадлежать только одной НОВОСТИ
 КОММЕНТАРИЙ может иметь только одного автора - ПОЛЬЗОВАТЕЛЯ
 КОММЕНТАРИЙ может иметь только один статус в одно время
+КАТЕГОРИЯ может иметь много НОВОСТЕЙ
 
 Ораничения:
 1. Неавторизованный пользователь (guest) не может редактировать новости и оставлять комментарии
@@ -32,53 +33,61 @@
 
 CREATE DATABASE news_repository_main;
 
-CREATE TABLE user_right
-(
-    id SERIAL PRIMARY KEY ,
-    user_right VARCHAR(128) NOT NULL
-);
-
-CREATE TABLE role
-(
-    id SERIAL PRIMARY KEY ,
-    role VARCHAR(128) NOT NULL
-);
-
-CREATE TABLE status
-(
-    id SERIAL PRIMARY KEY,
-    status VARCHAR(128) NOT NULL
-);
 
 CREATE TABLE portal_user
 (
     id         SERIAL PRIMARY KEY,
-    first_name VARCHAR(128)                   NOT NULL,
-    last_name  VARCHAR(128)                   NOT NULL,
-    nickname   VARCHAR(256) UNIQUE            NOT NULL,
-    email      VARCHAR(256)                   NOT NULL,
-    password   VARCHAR(128)                   NOT NULL,
-    image      VARCHAR(256),
-    right_id   INT REFERENCES user_right (id) NOT NULL,
-    role_id    INT REFERENCES role (id)       NOT NULL UNIQUE
+    first_name VARCHAR(128)        NOT NULL,
+    last_name  VARCHAR(128)        NOT NULL,
+    nickname   VARCHAR(256) UNIQUE NOT NULL,
+    email      VARCHAR(256)        NOT NULL UNIQUE,
+    password   VARCHAR(128)        NOT NULL,
+    image      VARCHAR(256)
+    -- right_id   INT REFERENCES user_right (id) NOT NULL,
+    -- role_id    INT REFERENCES role (id)       NOT NULL UNIQUE
     -- news_id    BIGINT REFERENCES news (id),
     -- comment_id BIGINT REFERENCES comment (id)
+);
+
+CREATE TABLE role
+(
+    id      SERIAL PRIMARY KEY,
+    role    VARCHAR(128)                    NOT NULL,
+    user_id INT REFERENCES portal_user (id) NOT NULL UNIQUE
+);
+
+CREATE TABLE user_right
+(
+    id         SERIAL PRIMARY KEY,
+    user_right VARCHAR(128)             NOT NULL,
+    role_id    INT REFERENCES role (id) NOT NULL
+);
+
+
+CREATE TABLE category
+(
+    id       SERIAL PRIMARY KEY,
+    category VARCHAR(128) NOT NULL
+    -- news_id  BIGINT REFERENCES status (id) NOT NULL
+    --  comment_id  BIGINT REFERENCES comment (id),
+    -- user_id     INT REFERENCES portal_user (id) NOT NULL UNIQUE
 );
 
 CREATE TABLE news
 (
     id          BIGSERIAL PRIMARY KEY,
-    title       VARCHAR(128)               NOT NULL,
-    description VARCHAR(256)               NOT NULL,
-    content     TEXT                       NOT NULL,
-    created_at  TIMESTAMP                  NOT NULL,
+    title       VARCHAR(128)                    NOT NULL,
+    description VARCHAR(256)                    NOT NULL,
+    content     TEXT                            NOT NULL,
+    created_at  TIMESTAMP                       NOT NULL,
     updated_at  TIMESTAMP,
-    category    VARCHAR(128)               NOT NULL,
     image       VARCHAR(256),
-    status_id   INT REFERENCES status (id) NOT NULL UNIQUE
+    -- status_id   INT REFERENCES status (id) NOT NULL UNIQUE
     --  comment_id  BIGINT REFERENCES comment (id),
-    -- user_id     INT REFERENCES portal_user (id) NOT NULL UNIQUE
+    user_id     INT REFERENCES portal_user (id) NOT NULL,
+    category_id INT REFERENCES category (id)    NOT NULL
 );
+
 
 CREATE TABLE comment
 (
@@ -87,19 +96,15 @@ CREATE TABLE comment
     created_at TIMESTAMP                       NOT NULL,
     updated_at TIMESTAMP,
     attachment BYTEA,
-    news_id    BIGINT REFERENCES news (id)     NOT NULL UNIQUE,
-    user_id    INT REFERENCES portal_user (id) NOT NULL UNIQUE,
-    status_id  INT REFERENCES status (id)      NOT NULL UNIQUE
+    news_id    BIGINT REFERENCES news (id)     NOT NULL,
+    user_id    INT REFERENCES portal_user (id) NOT NULL
+    -- status_id  INT REFERENCES status (id)      NOT NULL UNIQUE
 );
 
-ALTER TABLE portal_user
-    ADD COLUMN news_id BIGINT REFERENCES news (id);
-
-ALTER TABLE portal_user
-    ADD COLUMN comment_id BIGINT REFERENCES comment (id);
-
-ALTER TABLE news
-    ADD COLUMN comment_id BIGINT REFERENCES comment (id);
-
-ALTER TABLE news
-    ADD COLUMN user_id INT REFERENCES portal_user (id) NOT NULL UNIQUE;
+CREATE TABLE status
+(
+    id         SERIAL PRIMARY KEY,
+    status     VARCHAR(128)                   NOT NULL,
+    news_id    BIGINT REFERENCES news (id)    NOT NULL UNIQUE,
+    comment_id BIGINT REFERENCES comment (id) NOT NULL UNIQUE
+);
